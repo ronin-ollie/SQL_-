@@ -1,0 +1,3 @@
+select count(gender) male_num,avg(gpa) avg_gpa
+from user_profile
+where gender = 'male'
