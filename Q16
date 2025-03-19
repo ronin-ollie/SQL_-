@@ -1,3 +1,4 @@
-select device_id,gender,age,university,gpa
+select round(max(gpa),1) gpa
 from user_profile
-where university in ('北京大学','复旦大学','山东大学')
+where university = '复旦大学'
+
