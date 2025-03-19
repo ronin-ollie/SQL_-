@@ -1,0 +1,8 @@
+select gender,
+university,
+count(id) user_num,
+round(avg(active_days_within_30),1) avg_active_day,
+round(avg(question_cnt),1) avg_question_cnt
+from user_profile
+group by gender,university
+order by gender asc,university asc
