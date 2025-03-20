@@ -1,0 +1,6 @@
+select q.device_id,q.question_id,q.result
+from question_practice_detail as q
+join user_profile
+on q.device_id = user_profile.device_id 
+and  user_profile.university = '浙江大学'
+order by question_id
