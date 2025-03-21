@@ -1,0 +1,12 @@
+select avg(if(b.device_id is not null,1,0)) as avg_ret
+from 
+(
+select distinct device_id,date
+from question_practice_detail
+) as a
+left join 
+(
+select distinct device_id,date_sub(date,interval 1 day) as date 
+from question_practice_detail
+) as b
+on a.device_id = b.device_id and a.date = b.date
