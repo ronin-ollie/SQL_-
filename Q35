@@ -1,0 +1,9 @@
+select difficult_level,avg(if(result = 'right',1,0)) as correct_rate
+from user_profile as a
+    inner join question_practice_detail as b
+     on a.device_id = b.device_id
+    inner join question_detail as c
+     on b.question_id = c.question_id
+where a.university = '浙江大学'     
+group by c.difficult_level
+order by correct_rate
