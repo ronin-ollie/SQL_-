@@ -1,0 +1,8 @@
+select a.device_id,university,
+       sum(if(result is not null,1,0)) as question_cnt,
+       sum(if(result = 'right',1,0)) as right_question_cnt
+from user_profile as a
+left join question_practice_detail as b
+on a.device_id = b.device_id and month(b.date) = '08'
+where university = '复旦大学'
+group by a.device_id
