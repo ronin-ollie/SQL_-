@@ -1,0 +1,17 @@
+select distinct user_id,max(consec_day) as max_consec_days
+from(   
+    select user_id,data2,
+    count(data2) as consec_day
+    from(
+        select*,
+        date_sub(fdate,interval data_order day) as data2
+        from(
+            select distinct*,
+            row_number() over(partition by user_id order by fdate) as data_order
+            from tb_dau
+            where fdate between '2023-01-01'and '2023-01-31'
+            ) as t1
+        ) as t2
+    group by user_id,data2    
+    ) as t3    
+group by user_id    
