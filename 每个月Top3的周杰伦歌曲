@@ -1,0 +1,52 @@
+with  
+    a as (
+        select 
+            month(t1.fdate) as month,
+            t1.user_id,
+            t1.song_id,
+            t2.song_name,
+            t2.singer_name,
+            t3.age
+        from play_log as t1
+        inner join song_info as t2
+        on t1.song_id = t2.song_id
+        inner join user_info as t3
+        on t1.user_id = t3.user_id
+        where 
+            t3.age between 18 and 25
+            and year(t1.fdate) = '2022'
+            and t2.singer_name = '周杰伦'
+    ),
+    b as(
+        select 
+            month,
+            song_id,
+            song_name,
+            count(song_name) as play_pv
+        from a
+        group by month,song_id,song_name
+    ),
+    c as (
+        select
+            month,
+            song_name,
+            play_pv,
+            row_number() over(
+                partition by month
+                order by play_pv desc,song_id
+            ) as ranking
+        from 
+            b
+    )
+
+ select 
+     month,
+     ranking,
+     song_name,
+     play_pv
+ from
+     c
+ where
+     ranking <= 3
+ order by
+     month,ranking  
