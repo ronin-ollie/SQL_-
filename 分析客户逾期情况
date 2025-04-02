@@ -1,0 +1,7 @@
+select distinct b.pay_ability,
+concat(round(avg(if(overdue_days is null,0,1))*100,1),'%') as overdue_ratio
+from loan_tb as a
+inner join customer_tb as b
+on a.customer_id = b.customer_id
+group by b.pay_ability
+order by overdue_ratio desc
