@@ -1,0 +1,6 @@
+select c.user_id, c.room_id, g.room_type, datediff(c.checkout_time, c.checkin_time) as days
+from checkin_tb c 
+inner join guestroom_tb g 
+on c.room_id = g.room_id
+where datediff(c.checkout_time, c.checkin_time) > 1
+order by days asc, c.room_id ASC, c.user_id DESC
